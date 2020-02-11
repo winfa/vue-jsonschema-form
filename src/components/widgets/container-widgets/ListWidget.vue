@@ -33,7 +33,8 @@ export default {
 	setup: ({ listItems }, { root: { $router } }) => {
 		return {
 			goListItem(index) {
-				$router.push({ params: { id: listItems[index].mappingPath } })
+				const path = listItems[index].mappingPath.replace(/(\{\d*\})?$/, `{${index}}`)
+				$router.push({ params: { id:  path} })
 			}
 		}
 	},
