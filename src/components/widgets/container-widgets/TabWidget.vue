@@ -1,5 +1,5 @@
 <template>
-	<b-tabs content-class="mt-3" justified>
+	<b-tabs content-class="mt-3" justified @input="onActiveEvent">
 		<b-tab v-for="(item, index) in listItems" :key="index"
 				:title="item.title" :active="activeIndex === index">
 				<slot></slot>
@@ -10,7 +10,14 @@
 <script>
 export default {
 	name: 'TabWidget',
-	setup() {
+	setup(props, { root: { $router } }) {
+		return {
+			onActiveEvent(tabIndex) {
+				if (props.activeIndex !== tabIndex) {
+					$router.push({ params: { id: props.listItems[tabIndex].mappingPath } })
+				}
+			}
+		}
 	},
 
 	props: {

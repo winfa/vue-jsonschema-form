@@ -26,14 +26,42 @@ export default {
       state.schema = schema;
       state.systemData = systemData;
     },
+
+    setSource(state, { path, value }) {
+      if (!path) return;
+
+      return _.set(state.source, path, value);
+    },
+
+    initSource(state, { path, defaultValue }) {
+      if (!path) return;
+
+      const result = _.get(state.source, path);
+
+      if ((defaultValue !== null && defaultValue !== undefined)  &&
+          (result === null || result === undefined)) {
+
+        return _.set(state.source, path, defaultValue);
+      }
+
+    }
   },
 
   getters: {
+    mapping: (state) => {
+      return state.mapping
+    },
+
     getMappingByPath: (state) => (path) => {
       if(path === 'root' || path === '') return state.mapping
       if (!path) return undefined;
 
       return _.get(state.mapping, path);
+    },
+
+    getSource: (state) => (path) => {
+      if (!path) return state.source;
+      return _.get(state.source, path);
     },
 
     getBaseWidgetName: () => (sourceType) => {

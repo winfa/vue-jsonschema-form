@@ -19,7 +19,7 @@ import Verte from 'verte';
 export default {
   name: "ColorWidget",
   setup() {
-    const color = ref('#FFFFFF')
+    const color = ref('#000000')
     return { color }
   },
 

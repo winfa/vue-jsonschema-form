@@ -1,35 +1,42 @@
+<template>
+	<div>
+		<component v-for="(item, index) in mapping.fields" v-bind:key="index"
+				v-bind:is="getBaseWidgetName(item.viewType)" :mappingPath="item.mappingPath">
+		</component>
+		hello
+	</div>
+</template>
+
+<script>
+import BaseWidget from "./BaseWidget.vue";
+import BaseLeafWidget from "../leaf-widgets/BaseLeafWidget.vue";
+import BaseArrayWidget from "./BaseArrayWidget.vue";
+import BaseObjectWidget from "./BaseObjectWidget.vue";
+
+export default {
+	name: 'PureSectionWidget',
+
+	setup(props, { root: { $store } }) {
+		const mapping = $store.getters['widget/getMappingByPath'](props.mappingPath)
+		const getBaseWidgetName = $store.getters["widget/getBaseWidgetName"];
+
+		return {
+			mapping, getBaseWidgetName
+		}
+	},
+
+	props: {
+    mappingPath: {
+      type: String
+    }
+  },
+
+	components: { BaseArrayWidget, BaseWidget, BaseLeafWidget, BaseObjectWidget }
+}
 
 
-// <script>
-// import { reactive, createElement as h } from '@vue/composition-api'
-// import BaseArrayWidget from './BaseArrayWidget.vue'
+</script>
 
-// export default {
-// 	setup(props, { root: { $route, $store } }) {
-// 		const mapping = $store.getters['widget/getMappingByPath'](props.mappingPath)
+<style scoped>
 
-// 		return () => h('div', {}, mapping.fields.map(subMaping => {
-// 			if (subMapping.sourceType === 'array') {
-// 				return h('BaseArrayWidget', { props: {
-// 					mappingPath: subMapping.mappingPath
-// 				} });
-// 			}
-
-// 			return h('b-form-group', {
-// 				props: {
-// 					'label': subMapping.title + '.......' + JSON.stringify(subMapping)
-// 				}
-// 			},[
-// 				h('b-form-input')
-// 			])
-// 		}))
-// 	},
-
-// 	components: { }
-// }
-
-// </script>
-
-// <style scoped>
-
-// </style>
+</style>

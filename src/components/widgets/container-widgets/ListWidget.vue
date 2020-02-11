@@ -8,7 +8,11 @@
 				{{ item.title }}
 			</div>
 
-			<div class="item-actions h-100 position-absolute">
+			<div class="item-actions h-100 position-absolute d-flex justify-content-start">
+				<div class="edit-item item-action h-100 d-flex align-items-center justify-content-center" @click="goListItem(index)">
+					<b-icon icon="option" aria-hidden="true"></b-icon>
+				</div>
+
 				<div class="delete-item item-action h-100 d-flex align-items-center justify-content-center">
 					<b-icon icon="trash" aria-hidden="true"></b-icon>
 				</div>
@@ -26,21 +30,12 @@
 
 <script>
 export default {
-	setup: () => {
-		// // const { activeIndex, listItems } = props
-
-		// const ItemElement = (props) => <div>{props.title}</div>
-		// console.log(ItemElement)
-
-		// // const vnItems = listItems.map(item => {
-		// // 	return (<ItemElement title={item.title}/>)
-		// // })
-		// return () => (
-		// 	<div>
-		// 		<ItemElement title='haha111h'/>
-		// 		<div>eee</div>
-		// 	</div>
-		// )
+	setup: ({ listItems }, { root: { $router } }) => {
+		return {
+			goListItem(index) {
+				$router.push({ params: { id: listItems[index].mappingPath } })
+			}
+		}
 	},
 
 	props: {
@@ -70,13 +65,14 @@ export default {
   color: #dadada;
 }
 
-/* .edit-item:hover {
+.edit-item:hover {
   background-color: #ef9521;
   color: #dadada;
 }
 
 .edit-item {
-  color: #ef9521;
-} */
+	color: #ef9521;
+	width: 3em;
+}
 
 </style>
